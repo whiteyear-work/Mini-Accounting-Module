@@ -6,5 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class JournalEntryLine extends Model
 {
-    //
+    public function account()
+    {
+        return $this->belongsTo(Account::class);
+    }
+
+    public function journalEntry()
+    {
+        return $this->belongsTo(JournalEntry::class);
+    }
 }

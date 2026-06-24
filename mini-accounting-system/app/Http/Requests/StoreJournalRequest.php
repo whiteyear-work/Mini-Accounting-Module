@@ -2,8 +2,10 @@
 
 namespace App\Http\Requests;
 
+use App\Models\JournalEntryLine;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 use Override;
 
 class StoreJournalRequest extends FormRequest
@@ -13,7 +15,7 @@ class StoreJournalRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -27,8 +29,8 @@ class StoreJournalRequest extends FormRequest
             'entry_date' => ['required', 'date'],
             'description' => ['nullable', 'string'],
             'lines' => ['required', 'array'],
-            'lines.*.account_id' => ['required', 'exists:accounts, id'],
-            'lines.*.type' => ['required', 'in:debit,credit'],
+            'lines.*.account_id' => ['required', 'exists:accounts,id'],
+            'lines.*.type' => ['required', Rule::in(JournalEntryLine::TYPES)],
             'lines.*.amount' => ['required', 'numeric', 'gt:0'],
         ];
     }
@@ -36,6 +38,8 @@ class StoreJournalRequest extends FormRequest
     // #[Override]
     // public function messages(): array
     // {
-    //     return [];
+    //     return [
+    //         'entry_date.required' => 'Entry date is required.',
+    //     ];
     // }
 }

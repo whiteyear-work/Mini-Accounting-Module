@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('account_id')->constrained()->cascadeOnDelete();
             $table->foreignId('journal_entry_id')->constrained()->cascadeOnDelete();
-            $table->enum('type', ['active', 'inactive']);
+            $table->enum('type', ['credit', 'debit']);
             $table->decimal('amount', 15, 2);
             $table->timestamps();
         });

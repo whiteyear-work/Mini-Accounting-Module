@@ -11,4 +11,6 @@ Route::get('/', function () {
 
 Route::prefix('journal')->group(function () {
     Route::post('/add', [JournalEntryController::class, 'store']);
+    Route::get('/entry-lines/{id}', [JournalEntryController::class, 'getJournal']);
+    Route::get('/trial-balance', [JournalEntryController::class, 'getTrialBal']);
 });

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreJournalRequest;
 use App\Services\JournalService;
+use GuzzleHttp\Psr7\Request;
 use Illuminate\Http\JsonResponse;
 use Throwable;
 
@@ -38,4 +39,6 @@ class JournalEntryController extends Controller
             ], 500);
         }
     }
+
+    public function getJournal(Request $request) {}
 }

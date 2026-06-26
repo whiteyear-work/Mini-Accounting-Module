@@ -28,4 +28,10 @@ class JournalEntryRepository
 
         return $journal;
     }
+
+    public function getById(int $id): JournalEntry
+    {
+        return JournalEntry::with('journalEntryLines.account')
+            ->findOrFail($id);
+    }
 }

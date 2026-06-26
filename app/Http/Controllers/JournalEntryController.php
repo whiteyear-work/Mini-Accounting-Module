@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreJournalRequest;
+use App\Http\Resources\JournalEntryResource;
+use App\Models\JournalEntry;
 use App\Services\JournalService;
 use GuzzleHttp\Psr7\Request;
 use Illuminate\Http\JsonResponse;
@@ -40,5 +42,25 @@ class JournalEntryController extends Controller
         }
     }
 
-    public function getJournal(Request $request) {}
+    public function getJournal(int $id, JournalService $journalService): JsonResponse
+    {
+        try {
+
+            $journal = $journalService->getJournalEntry($id);
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Get Journal Success',
+                'data' => new JournalEntryResource($journal),
+            ], 200);
+        } catch (Throwable $e) {
+            report($e);
+
+            return response()->json([
+                'status' => false,
+                'message' => 'Journal ID not found',
+                'error' => $e->getMessage(),
+            ], 422);
+        }
+    }
 }

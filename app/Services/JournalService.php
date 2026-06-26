@@ -39,4 +39,9 @@ class JournalService
 
         return $journal;
     }
+
+    public function getJournalEntry(int $id): JournalEntry
+    {
+        return $this->repository->getById($id);
+    }
 }
